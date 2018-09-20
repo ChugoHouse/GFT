@@ -1,0 +1,31 @@
+<div class="col-lg-6">
+	<h1>{{title}}</h1>
+	
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		El proceso de tu cuenta está en proceso, te notificaremos si es aprobada o rechazada la solicitud.
+	</div>
+	<div class="alert alert-danger" *ngIf="status == 'error'">
+		No se puedo solicitar la cuenta
+	</div>
+	
+	<form #cardForm="ngForm" (ngSubmit)="onSubmit(cardForm)" class="col-lg-7">
+		<p>
+			<label>Tipo de tarjeta a solicitar:</label>
+		    <select name="type" #type="ngModel" [(ngModel)]="card.type" class="form-control">
+      			<option *ngFor="let tc of type_cards" [ngValue]="tc.type">{{tc.name}}</option>
+    		</select>
+			<span *ngIf="!type.valid && type.touched">
+				El tipo de tarjeta es obligatorio
+			</span>
+		</p>
+		<p>
+			<label>Descripción</label>
+			<input type="text" name="name" #name="ngModel" [(ngModel)]="card.name" class="form-control" required />
+			<span *ngIf="!name.valid && name.touched">
+				La descripción es obligatoria
+			</span>
+		</p>
+		<input type="submit" value="Solicitar Tarjeta" class="btn btn-success" [disabled]="!cardForm.form.valid"/>
+	</form>
+</div>
+<app-accounts></app-accounts>
